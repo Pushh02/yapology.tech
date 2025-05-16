@@ -1,103 +1,179 @@
-import Image from "next/image";
+import React from 'react';
+import Link from 'next/link';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import FloatingElements from '@/components/FloatingElements';
+import MemeGenerator from '@/components/MemeGenerator';
+import { Sparkles, Star, Laugh } from 'lucide-react';
+import LoadingScreen from '@/components/LoadingScreen';
 
-export default function Home() {
+const LandingPage: React.FC = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen flex flex-col bg-white">
+      <FloatingElements />
+      <MemeGenerator />
+      <Header />
+      
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 text-gray-800">
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <img 
+            src="https://i.kym-cdn.com/entries/icons/original/000/042/876/cover3.jpg" 
+            alt="Skibidi background" 
+            className="w-full h-full object-cover"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        
+        <div className="container mx-auto relative z-10 px-4 py-16 md:py-24">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-pixel mb-6 glitch-text">
+              <div className="flex flex-wrap justify-center">
+                <span className="text-brainrot-pink">WELCOME TO </span>
+                <span className="text-brainrot-neon ml-2"> YAPOLOGY</span>
+                <span className="text-gray-800 ml-2">RIZZLERS 🫡💥</span>
+              </div>
+            </h1>
+            
+            <p className="text-xl md:text-2xl font-comic mb-8">
+              DROP YOUR <span className="text-brainrot-pink">BRAINROT</span> BANGERS HERE 🔥
+              <br />
+              <span className="text-sm">The most chaotic article platform this side of the Skibidiverse fr fr</span>
+            </p>
+            
+            <div className="relative">
+              <Link 
+                href="/home" 
+                className="skibidi-button text-lg inline-block"
+              >
+                Enter the Yap-Zone 🚪
+              </Link>
+              <div className="absolute -top-5 -right-12 transform rotate-12 text-brainrot-pink font-comic text-sm animate-bounce-limited">
+                Click me! I'm rizzy!
+              </div>
+            </div>
+            
+            <div className="mt-10 flex justify-center space-x-6">
+              <button className="p-3 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full hover:bg-brainrot-pink hover:text-white transition-colors shadow-md">
+                <Star size={24} className="text-brainrot-pink" />
+              </button>
+              <button className="p-3 bg-gradient-to-br from-green-100 to-green-200 rounded-full hover:bg-brainrot-neon hover:text-white transition-colors shadow-md">
+                <Laugh size={24} className="text-brainrot-neon" />
+              </button>
+              <button className="p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full hover:bg-brainrot-blue hover:text-white transition-colors shadow-md">
+                <Sparkles size={24} className="text-brainrot-blue" />
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-chaos"></div>
+      </section>
+      
+      {/* Features Section */}
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-4xl font-pixel text-center mb-12">
+            <span className="text-brainrot-purple">What's</span> <span className="text-brainrot-blue">The</span> <span className="text-brainrot-pink">Yap</span> <span className="text-brainrot-neon">About?</span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="bg-gradient-to-br from-white to-blue-50 p-6 rounded-xl shadow-lg border-2 border-brainrot-neon transform hover:scale-105 transition-all">
+              <div className="w-16 h-16 rounded-full bg-brainrot-blue/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl animate-bounce-limited">🧠</span>
+              </div>
+              <h3 className="text-xl font-comic text-center mb-3 text-brainrot-blue">Read Ohio-Core Articles</h3>
+              <p className="text-gray-600 text-center">
+                Discover brainrot articles that'll make you go "fr fr no cap 💀". Pure Ohio vibes guaranteed or your rizz back!
+              </p>
+              <div className="mt-4 text-center italic text-xs text-gray-400">*Rizz cannot be refunded and is non-transferable</div>
+            </div>
+            
+            {/* Feature 2 */}
+            <div className="bg-gradient-to-br from-white to-pink-50 p-6 rounded-xl shadow-lg border-2 border-brainrot-pink transform hover:scale-105 transition-all">
+              <div className="w-16 h-16 rounded-full bg-brainrot-pink/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl animate-skibidi-dance">📝</span>
+              </div>
+              <h3 className="text-xl font-comic text-center mb-3 text-brainrot-pink">Yeet Your Own Yaps</h3>
+              <p className="text-gray-600 text-center">
+                Create your own skibidi content with our rizz-boosting editor. Maximum GYATT energy or it wasn't written in Ohio!
+              </p>
+              <div className="mt-4 text-center italic text-xs text-gray-400">*98% of content actually written in Nebraska</div>
+            </div>
+            
+            {/* Feature 3 */}
+            <div className="bg-gradient-to-br from-white to-purple-50 p-6 rounded-xl shadow-lg border-2 border-brainrot-purple transform hover:scale-105 transition-all">
+              <div className="w-16 h-16 rounded-full bg-brainrot-purple/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl animate-float">📊</span>
+              </div>
+              <h3 className="text-xl font-comic text-center mb-3 text-brainrot-purple">Track Your Rizz Stats</h3>
+              <p className="text-gray-600 text-center">
+                See how much rizz your articles are getting with detailed GYATT analytics. Numbers don't lie (but Ohio doesn't exist).
+              </p>
+              <div className="mt-4 text-center italic text-xs text-gray-400">*All stats subject to skibidi inflation</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-100 to-purple-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-pixel text-gray-800 mb-6">
+              Ready to become a certified <span className="text-brainrot-neon">Yapper</span>?
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Join the most unhinged community of brainrot enjoyers. It's giving Ohio energy fr fr 🫡
+            </p>
+            <div className="relative">
+              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <Link href="/signup" className="skibidi-button relative">
+                  Sign Up Now 🚀
+                  <span className="absolute -top-4 -right-4 animate-spin-slow text-2xl">✨</span>
+                </Link>
+                <Link href="/home" className="ohio-button relative">
+                  Browse Articles 👀
+                  <span className="absolute -top-6 right-0 transform rotate-12 text-xs font-comic text-brainrot-pink animate-bounce-limited">
+                    100% real no cap
+                  </span>
+                </Link>
+              </div>
+              <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 italic">
+                No Skibidi Toilets were harmed in the making of this website
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Fun Stats Section */}
+      <section className="py-8 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-6">
+            <div className="text-center">
+              <p className="text-3xl font-bold text-brainrot-blue">69,420</p>
+              <p className="text-sm text-gray-500">Rizzy Articles</p>
+            </div>
+            <div className="text-center">
+              <p className="text-3xl font-bold text-brainrot-pink">42,069</p>
+              <p className="text-sm text-gray-500">Yappy Users</p>
+            </div>
+            <div className="text-center">
+              <p className="text-3xl font-bold text-brainrot-neon">∞</p>
+              <p className="text-sm text-gray-500">Skibidi Moments</p>
+            </div>
+            <div className="text-center">
+              <p className="text-3xl font-bold text-brainrot-purple">0</p>
+              <p className="text-sm text-gray-500">Ohio Deniers</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <Footer />
     </div>
   );
-}
+};
+
+export default LandingPage;

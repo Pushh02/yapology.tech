@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Press_Start_2P, Roboto } from "next/font/google";
 import "./globals.css";
+import { UserProvider } from "@/contexts/UserContext";
 
 const pressStart2P = Press_Start_2P({
   weight: "400",
@@ -39,7 +40,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pressStart2P.variable} ${roboto.variable} antialiased`}>
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

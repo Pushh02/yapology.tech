@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, LogIn, Sparkles } from 'lucide-react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import { useUser } from '@/contexts/UserContext';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { login } = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const LoginPage: React.FC = () => {
       const response = await axios.post('/api/auth/signin', { email, password });
       console.log(response);
       if (response.status === 200) {
+        login(response.data);
         router.push('/home');
       } else {
         setError(response.data.error);

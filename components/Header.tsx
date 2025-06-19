@@ -1,16 +1,25 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, User, Bell, Menu } from 'lucide-react';
+import { Search, User, Bell, Menu, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@/contexts/UserContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSkibidiMode, setIsSkibidiMode] = useState(false);
+  const { user, isAuthenticated, logout, isLoading } = useUser();
+  console.log(isAuthenticated, "isAuthenticated");
 
   useEffect(() => {
     document.body.classList.toggle('skibidi-mode', isSkibidiMode);
   }, [isSkibidiMode]);
+
+  const handleLogout = () => {
+    logout();
+    // Redirect to login page
+    window.location.href = '/login';
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-black shadow-lg">
@@ -59,14 +68,29 @@ const Header: React.FC = () => {
               🚽
             </button>
 
-            <Link href="/login" className="p-2 rounded-full bg-gray-800 border-2 border-brainrot-purple hover:bg-brainrot-purple">
-              <User size={20} className="text-white" />
-            </Link>
-
-            <button className="p-2 rounded-full bg-gray-800 border-2 border-brainrot-pink hover:bg-brainrot-pink relative">
-              <Bell size={20} className="text-white" />
-              <span className="absolute -top-1 -right-1 bg-brainrot-neon text-black text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold">3</span>
-            </button>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <Link href="/profile" className="p-2 rounded-full bg-gray-800 border-2 border-brainrot-purple hover:bg-brainrot-purple flex items-center space-x-2">
+                      <User size={20} className="text-white" />
+                      <span className="text-white text-sm font-comic">{user?.username}</span>
+                      <span className="text-brainrot-neon text-xs">{user?.auraPoints}</span>
+                    </Link>
+                    <button 
+                      onClick={handleLogout}
+                      className="p-2 rounded-full bg-gray-800 border-2 border-red-500 hover:bg-red-500"
+                    >
+                      <LogOut size={20} className="text-white" />
+                    </button>
+                  </>
+                ) : (
+                  <Link href="/login" className="p-2 rounded-full text-white bg-gray-800 border-2 border-brainrot-purple hover:bg-brainrot-purple">
+                    Login🫡
+                  </Link>
+                )}
+              </>
+            )}
           </div>
         </div>
 
@@ -95,9 +119,27 @@ const Header: React.FC = () => {
             <Link href="/create" className="skibidi-button text-center">
               Yeet New Article 🚀
             </Link>
-            <Link href="/login" className="ohio-button text-center">
-              Login / Sign Up 🫡
-            </Link>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <Link href="/profile" className="ohio-button text-center">
+                      Profile: {user?.username} {user?.auraPoints}
+                    </Link>
+                    <button 
+                      onClick={handleLogout}
+                      className="py-2 px-4 rounded-lg border-2 border-red-500 bg-gray-800 text-white text-center hover:bg-red-500"
+                    >
+                      Logout 🚪
+                    </button>
+                  </>
+                ) : (
+                  <Link href="/login" className="ohio-button text-center">
+                    Login / Sign Up 🫡
+                  </Link>
+                )}
+              </>
+            )}
             <button 
               onClick={() => setIsSkibidiMode(!isSkibidiMode)}
               className={`py-2 px-4 rounded-lg border-2 text-center ${isSkibidiMode ? 'bg-brainrot-neon border-brainrot-pink text-black' : 'bg-gray-800 border-brainrot-blue text-white'}`}

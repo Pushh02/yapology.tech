@@ -9,21 +9,79 @@ import MemeGenerator from '@/components/MemeGenerator';
 import FilterSection from '@/components/FilterSection';
 import { Button } from '@/components/ui/button';
 import { Search, Rocket } from 'lucide-react';
-import { FEATURED_ARTICLE, ARTICLES, TRENDING_TOPICS, BRAINROT_WORDS } from '@/app/data/articles';
+import { TRENDING_TOPICS, BRAINROT_WORDS } from '@/app/data/articles';
+import axios from 'axios';
 
 type FilterType = 'trend' | 'ohio' | 'fresh';
 
+type Article = {
+  id: string;
+  title: string;
+  content: string;
+  thumbnail: string;
+  excerpt: string;
+  authorId: string;
+  author: {
+    id: string;
+    username: string;
+    email: string;
+    auraPoints: number;
+  };
+  comments: Array<{
+    id: string;
+    content: string;
+    authorId: string;
+    articleId: string;
+    createdAt: string;
+  }>;
+  likes: Array<{
+    id: string;
+    username: string;
+  }>;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export default async function HomePage() {
+  // Fetch articles from the API
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const response = await axios.get(`${baseUrl}/api/article`);
+  
+  if (!response) {
+    throw new Error('Failed to fetch articles');
+  }
+  
+  const { articles } = response.data;
+  
+  // Get the featured article (most recent one)
+  const featuredArticle = articles[0] || {
+    id: '1',
+    title: 'Welcome to Yapology!',
+    content: 'Start sharing your thoughts and join the community!',
+    author: {
+      id: 'admin',
+      username: 'Admin',
+      email: 'admin@yapology.com',
+      auraPoints: 100,
+    },
+    authorId: 'admin',
+    comments: [],
+    likes: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    thumbnail: 'https://i.kym-cdn.com/entries/icons/original/000/026/638/cat.jpg',
+    excerpt: 'Start your journey into the world of Yapology!',
+  };
+  
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <FloatingElements />
       <MemeGenerator />
       <Header />
       
       <main className="flex-grow">
         {/* Featured Article */}
         <section className="container mx-auto px-4 pt-6 pb-12">
-          <FeaturedArticle {...FEATURED_ARTICLE} />
+          <FeaturedArticle {...featuredArticle} />
         </section>
         
         {/* Main Content */}
@@ -36,8 +94,16 @@ export default async function HomePage() {
               
               {/* Articles Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                {ARTICLES.map((article) => (
-                  <ArticleCard key={article.id} {...article} />
+                {articles.map((article: Article) => (
+                  <ArticleCard 
+                    key={article.id} 
+                    id={article.id}
+                    title={article.title}
+                    excerpt={article.excerpt}
+                    author={article.author.username}
+                    thumbnail={article.thumbnail}
+                    comments={article.comments.map((comment: { content: string }) => comment.content)}
+                  />
                 ))}
               </div>
               

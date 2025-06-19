@@ -1,17 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { Heart, MessageSquare, Eye } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 interface ArticleCardProps {
   id: string;
   title: string;
   excerpt: string;
   author: string;
-  authorImg: string;
   thumbnail: string;
-  rizzScore: number;
-  comments: number;
-  views: number;
+  comments: string[];
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({
@@ -19,11 +17,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   title,
   excerpt,
   author,
-  authorImg,
   thumbnail,
-  rizzScore,
   comments,
-  views,
 }) => {
   return (
     <Link 
@@ -48,7 +43,12 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full overflow-hidden">
-              <img src={authorImg} alt={author} className="w-full h-full object-cover" />
+              <Avatar>
+                <AvatarImage />
+                <AvatarFallback>
+                  {author.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
             </div>
             <span className="text-xs font-medium">{author}</span>
           </div>
@@ -56,15 +56,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
           <div className="flex items-center space-x-3 text-gray-500">
             <div className="flex items-center space-x-1">
               <Heart size={14} className="text-brainrot-pink" />
-              <span className="text-xs">{rizzScore}</span>
+              <span className="text-xs">20</span>
             </div>
             <div className="flex items-center space-x-1">
               <MessageSquare size={14} className="text-brainrot-blue" />
-              <span className="text-xs">{comments}</span>
+              <span className="text-xs">{comments.length}</span>
             </div>
             <div className="flex items-center space-x-1">
               <Eye size={14} className="text-brainrot-purple" />
-              <span className="text-xs">{views}</span>
+              <span className="text-xs">20</span>
             </div>
           </div>
         </div>

@@ -2,17 +2,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { Heart, MessageSquare, Eye, Star } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 interface FeaturedArticleProps {
   id: string;
   title: string;
   excerpt: string;
-  author: string;
-  authorImg: string;
+  author: {
+    id: string;
+    username: string;
+    email: string;
+    auraPoints: number;
+  };
   thumbnail: string;
-  rizzScore: number;
-  comments: number;
-  views: number;
+  comments: string[];
 }
 
 const FeaturedArticle: React.FC<FeaturedArticleProps> = ({
@@ -20,12 +23,10 @@ const FeaturedArticle: React.FC<FeaturedArticleProps> = ({
   title,
   excerpt,
   author,
-  authorImg,
   thumbnail,
-  rizzScore,
   comments,
-  views,
 }) => {
+  const { username } = author;
   return (
     <div className="relative overflow-hidden rounded-xl border-4 border-brainrot-pink bg-black">
       <div className="absolute inset-0">
@@ -52,23 +53,28 @@ const FeaturedArticle: React.FC<FeaturedArticleProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-brainrot-neon">
-              <img src={authorImg} alt={author} className="w-full h-full object-cover" />
+              <Avatar>
+                <AvatarImage />
+                <AvatarFallback>
+                  {username ? username.charAt(0) : ''}
+                </AvatarFallback>
+              </Avatar>
             </div>
-            <span className="text-sm font-medium text-white">{author}</span>
+            <span className="text-sm font-medium text-white">{username}</span>
           </div>
           
           <div className="flex items-center space-x-4 text-white">
             <div className="flex items-center space-x-1">
               <Heart size={16} className="text-brainrot-pink" />
-              <span className="text-sm">{rizzScore}</span>
+              <span className="text-sm">20</span>
             </div>
             <div className="flex items-center space-x-1">
               <MessageSquare size={16} className="text-brainrot-blue" />
-              <span className="text-sm">{comments}</span>
+              <span className="text-sm">{comments.length}</span>
             </div>
             <div className="flex items-center space-x-1">
               <Eye size={16} className="text-brainrot-purple" />
-              <span className="text-sm">{views}</span>
+              <span className="text-sm">20</span>
             </div>
           </div>
         </div>

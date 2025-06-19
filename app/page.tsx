@@ -10,7 +10,6 @@ import LoadingScreen from '@/components/LoadingScreen';
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <FloatingElements />
       <MemeGenerator />
       <Header />
       

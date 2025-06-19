@@ -111,7 +111,6 @@ const RELATED_ARTICLES = [
 export default function ArticlePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <FloatingElements />
       <Header />
       
       <main className="flex-grow">

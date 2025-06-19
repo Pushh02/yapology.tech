@@ -5,20 +5,12 @@ import { createToken } from '@/lib/jwt';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, password, confirm_password, phone } = body;
+    const { username, email, password } = body;
 
     // Validate required fields
-    if (!name || !email || !password || !confirm_password || !phone) {
+    if (!username || !email || !password) {
       return NextResponse.json(
-        { status: 'error', error: 'All fields are required', fields: { name: name ? true : false, email: email ? true : false, password: password ? true : false, confirm_password: confirm_password ? true : false, phone: phone ? true : false } },
-        { status: 400 }
-      );
-    }
-
-    // Validate password match
-    if (password !== confirm_password) {
-      return NextResponse.json(
-        { status: 'error', error: 'Passwords do not match' },
+        { status: 'error', error: 'All fields are required', fields: { username: username ? true : false, email: email ? true : false, password: password ? true : false } },
         { status: 400 }
       );
     }
@@ -38,10 +30,9 @@ export async function POST(request: Request) {
     // Create user
     const user = await prisma.user.create({
       data: {
-        name,
+        username,
         email,
         password,
-        phone
       }
     });
 
@@ -49,7 +40,7 @@ export async function POST(request: Request) {
     const token = await createToken({
       userId: user.id,
       email: user.email,
-      name: user.name
+      name: user.username
     });
 
     // Set cookie
@@ -57,7 +48,7 @@ export async function POST(request: Request) {
       {
         userId: user.id,
         email: user.email,
-        name: user.name
+        username: user.username
       },
       { status: 200 }
     );

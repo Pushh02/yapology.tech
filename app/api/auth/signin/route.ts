@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createToken } from '@/lib/jwt';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   try {
@@ -18,9 +19,6 @@ export async function POST(request: Request) {
     // Find user
     const user = await prisma.user.findUnique({
       where: { email },
-      include: {
-        WhatsAppAccount: true,
-      },
     });
 
     if (!user) {
@@ -31,7 +29,7 @@ export async function POST(request: Request) {
     }
 
     // Verify password
-    const isValidPassword = password === user.password;
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
       return NextResponse.json(
@@ -44,8 +42,7 @@ export async function POST(request: Request) {
     const token = await createToken({
       userId: user.id,
       email: user.email,
-      name: user.name,
-      accessToken: user.WhatsAppAccount[0]?.accessToken,
+      name: user.username,
     });
 
     // Set cookie
@@ -53,7 +50,7 @@ export async function POST(request: Request) {
       {
         userId: user.id,
         email: user.email,
-        name: user.name
+        username: user.username
       },
       { status: 200 }
     );
